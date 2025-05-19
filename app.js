@@ -6,6 +6,7 @@ import {errorHandlerMiddleware} from './middlewares/errorHandler.middleware.js'
 // routers
 import userRouter from './routes/user.routes.js'
 import authRouter from './routes/auth.routes.js'
+import companyRouter from './routes/company.routes.js'
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.get('/', (req,res)=> {
 
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/company', companyRouter);
 app.use(errorHandlerMiddleware);
 
 export {app}

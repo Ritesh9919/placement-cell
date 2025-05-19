@@ -14,13 +14,12 @@ const companySchema = new mongoose.Schema({
     district:{type:String, required:true},
     state:{type:String, required:true}
   },
-  linkedinUrl:String,
-  websiteurl:String,
-  compnaySize:{
+  
+  companySize:{
     type:Number,
     required:true
-  },
-  companyLogo:String
+  }
+  
 },{timestamps:true});
 
 
