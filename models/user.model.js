@@ -11,16 +11,17 @@ const userSchema = new mongoose.Schema({
     about:{
         type:String,
         required:true
+        
     },
     role:{
-      type:String,
-      enum:['user', 'employer'],
-      default:'user'
+        type:String,
+        default:"user"
     },
     profilePicture:String,
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     password:{
         type:String,

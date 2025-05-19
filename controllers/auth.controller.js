@@ -1,3 +1,4 @@
+import { Employer } from '../models/employer.model.js';
 import {User} from '../models/user.model.js';
 import {ApiError} from '../utils/apiError.js';
 import {ApiResponse} from '../utils/apiResponse.js'
@@ -56,6 +57,54 @@ try {
     } catch (error) {
         console.error(error);
        next(error); 
+    }
+}
+
+
+
+export const loginEmployer = async(req,res,next)=>  {
+    try {
+        const {email} = req.body;
+        if(!email) {
+            return next(new ApiError(400, "Email is required"));
+        }
+
+        const employer = await Employer.findOne({email});
+        if(employer) {
+        const token = employer.generateAuthToken();
+        const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        res.cookie('token', token, {
+            httpOnly:true,
+            secure:process.env.NODE_ENV === 'production',
+            sameSite:process.env.NODE_ENV === 'production' ? 'none':'lax',
+            maxAge:24 * 60 * 60 * 1000,
+            expires:expiryDate,
+            path:'/',
+            domain:process.env.NODE_ENV == 'production' ? process.env.FRONTEND_DOMAIN:undefined
+
+        })
+
+        return res.status(200).json(new ApiResponse(true, "Employer logged in", {}));
+        }
+
+        const employerUser = await Employer.create({email});
+        const token = employerUser.generateAuthToken();
+        const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        res.cookie('token', token, {
+            httpOnly:true,
+            secure:process.env.NODE_ENV === 'production',
+            sameSite:process.env.NODE_ENV === 'production' ? 'none':'lax',
+            maxAge:24 * 60 * 60 * 1000,
+            expires:expiryDate,
+            path:'/',
+            domain:process.env.NODE_ENV == 'production' ? process.env.FRONTEND_DOMAIN:undefined
+
+        })
+
+        return res.status(200).json(new ApiResponse(true, "Employer logged in", {}));
+    } catch (error) {
+        console.error(error);
+        next(error)
     }
 }
 

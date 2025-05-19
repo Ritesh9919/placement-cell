@@ -18,6 +18,10 @@ const companySchema = new mongoose.Schema({
   companySize:{
     type:Number,
     required:true
+  },
+  employer:{
+    type:mongoose.Types.ObjectId,
+    ref:"Employer"
   }
   
 },{timestamps:true});

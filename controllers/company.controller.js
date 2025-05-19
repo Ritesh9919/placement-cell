@@ -11,12 +11,13 @@ export const addCompany = async(req, res, next)=> {
         if(!name || !aboutCompany || !location || !companySize) {
             return next(new ApiError(400, 'All fields are required'));
         }
-
+        
+        
         if(req.user.role !== 'employer') {
             return next(new ApiError(400, 'Only employer can add company'));
         }
 
-        const company = await Company.create({name, aboutCompany, location, companySize})
+        const company = await Company.create({name, aboutCompany, location, companySize, employer:req.user._id})
         return res.status(200).json(new ApiResponse(true, "Company added", {company}))
     } catch (error) {
         console.error(error);

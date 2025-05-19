@@ -1,9 +1,10 @@
 import express from 'express';
 const router = express.Router();
-import {login, logout} from '../controllers/auth.controller.js'
-import { authenticate } from '../middlewares/auth.middleware.js';
+import {login, logout, loginEmployer} from '../controllers/auth.controller.js'
+import { authenticateUser } from '../middlewares/auth.middleware.js';
 
 router.post('/login', login);
-router.post('/logout', authenticate,logout);
+router.post('/logout', authenticateUser,logout);
+router.post('/employer/login', loginEmployer);
 
 export default router;

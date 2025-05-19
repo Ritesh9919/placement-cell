@@ -2,9 +2,26 @@ import mongoose from "mongoose";
 
 
 const jobSchema = new mongoose.Schema({
-  companyId:{
+  company:{
     type:mongoose.Types.ObjectId,
     ref:"Company"
+  },
+  postedBy:{
+    type:mongoose.Types.ObjectId,
+    ref:"User"
+  },
+  experience:{
+    type:String,
+    required:true
+    
+  },
+  position:{
+   type:String,
+   required:true
+  },
+  salary:{
+    type:String,
+    required:true
   },
   jobDescription:{
     type:String,
@@ -14,6 +31,7 @@ const jobSchema = new mongoose.Schema({
     type:Number,
     required:true
   },
+  
   deadline:{
     type:Date,
     required:true
@@ -23,7 +41,7 @@ const jobSchema = new mongoose.Schema({
     enum:["internship", "job", "internship+ppo"],
     default:'job'
   },
-  interviewRounds:[String],
+  
   mostHaveSkills:[String],
   goodToHaveSkills:[String],
   techStack:String

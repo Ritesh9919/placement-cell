@@ -10,6 +10,15 @@ const applicationSchema = new mongoose.Schema({
    jobId:{
     type:mongoose.Types.ObjectId,
     ref:'Job'
+   },
+   status:{
+      type:String,
+      enum:["applied", "rejected", "hired"],
+      default:'applied'
+   },
+   rejectionReson:{
+      type:String,
+      default:"Unknown"
    }
 },{timestamps:true});
 
